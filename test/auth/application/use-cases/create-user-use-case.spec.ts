@@ -1,7 +1,7 @@
 import { hashSync } from 'bcrypt'
 import type { Mock } from 'vitest'
 
-import { UserAlreadyExistsError } from '@/auth/application/errors/user-already-exisits.error'
+import { UserAlreadyExistsError } from '@/auth/application/errors/user-already-exists.error'
 import { CreateUserUseCase } from '@/auth/application/use-cases/create-user-use-case'
 import { createUserInstance } from '$/factories/auth/user-factories'
 import {
