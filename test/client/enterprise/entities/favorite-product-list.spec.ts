@@ -16,7 +16,7 @@ describe('FavoriteProductList', () => {
       const favoriteProductList = new FavoriteProductList([])
       expect(favoriteProductList.compareItems(item1, item2)).toBe(false)
     })
-    it('should return true if itens have the same productId', () => {
+    it('should return true if items have the same productId', () => {
       const item1 = createFavoriteProductInstance({
         productId: '1',
       })
