@@ -1,12 +1,12 @@
 import { faker } from '@faker-js/faker'
 
-import type { UserInstaceProps } from '@/auth/enterprise/entities/user'
+import type { UserInstanceProps } from '@/auth/enterprise/entities/user'
 import { User, UserRole } from '@/auth/enterprise/entities/user'
 
 export function createUserInstance({
   id,
   ...overrides
-}: Partial<UserInstaceProps & { id: string }> = {}): User {
+}: Partial<UserInstanceProps & { id: string }> = {}): User {
   const instance = User.hydrate(
     {
       email: faker.internet.email(),

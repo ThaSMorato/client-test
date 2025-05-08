@@ -10,7 +10,7 @@ export enum UserRole {
   USER = 'user',
 }
 
-export interface UserInstaceProps {
+export interface UserInstanceProps {
   email: string
   password: string
   role: UserRole
@@ -31,7 +31,7 @@ export class User extends Entity<UserProps> {
     email,
     password,
     ...props
-  }: Optional<UserInstaceProps, 'createdAt'>) {
+  }: Optional<UserInstanceProps, 'createdAt'>) {
     return new User({
       ...props,
       email: Email.create({ email }),
@@ -40,7 +40,7 @@ export class User extends Entity<UserProps> {
     })
   }
 
-  static hydrate({ email, password, ...props }: UserInstaceProps, id: string) {
+  static hydrate({ email, password, ...props }: UserInstanceProps, id: string) {
     return new User(
       {
         email: Email.hydrate({ email }),
