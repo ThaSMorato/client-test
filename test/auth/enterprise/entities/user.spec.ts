@@ -74,5 +74,23 @@ describe('User', () => {
         expect(user.comparePassword('123456')).toBeTruthy()
       })
     })
+
+    describe('updatePassword', () => {
+      it('should update the password', () => {
+        const user = User.hydrate(
+          {
+            email: 'test-email',
+            password: '123456',
+            role: UserRole.USER,
+            createdAt: new Date('2020-01-01T10:00:00Z'),
+          },
+          '1',
+        )
+
+        user.updatePassword('123456')
+
+        expect(user.password).toEqual('hashed-123456')
+      })
+    })
   })
 })
