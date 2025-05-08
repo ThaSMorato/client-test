@@ -57,9 +57,9 @@ export class Client extends Entity<ClientProps> {
   }
 
   alreadyInFavoriteList(productId: string) {
-    return !!this.props.favoriteProductList
+    return this.props.favoriteProductList
       .getItems()
-      .find((p) => p.productId === productId)
+      .some((p) => p.productId === productId)
   }
 
   createFavoriteProduct(product: ProductDTO) {

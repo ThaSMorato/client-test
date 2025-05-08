@@ -26,23 +26,15 @@ export abstract class WatchedList<T> {
   }
 
   private isCurrentItem(item: T): boolean {
-    return (
-      this.currentItems.filter((v: T) => this.compareItems(item, v)).length !==
-      0
-    )
+    return this.currentItems.some((v: T) => this.compareItems(item, v))
   }
 
   private isNewItem(item: T): boolean {
-    return (
-      this.newItems.filter((v: T) => this.compareItems(item, v)).length !== 0
-    )
+    return this.newItems.some((v: T) => this.compareItems(item, v))
   }
 
   private isRemovedItem(item: T): boolean {
-    return (
-      this.removedItems.filter((v: T) => this.compareItems(item, v)).length !==
-      0
-    )
+    return this.removedItems.some((v: T) => this.compareItems(item, v))
   }
 
   private removeFromNew(item: T): void {
@@ -62,10 +54,7 @@ export abstract class WatchedList<T> {
   }
 
   private wasAddedInitially(item: T): boolean {
-    return (
-      this.initialItems.filter((v: T) => this.compareItems(item, v)).length !==
-      0
-    )
+    return this.newItems.some((v: T) => this.compareItems(item, v))
   }
 
   public exists(item: T): boolean {
