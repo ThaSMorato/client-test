@@ -54,7 +54,7 @@ export abstract class WatchedList<T> {
   }
 
   private wasAddedInitially(item: T): boolean {
-    return this.newItems.some((v: T) => this.compareItems(item, v))
+    return this.initialItems.some((v: T) => this.compareItems(item, v))
   }
 
   public exists(item: T): boolean {
