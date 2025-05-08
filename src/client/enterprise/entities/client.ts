@@ -19,6 +19,11 @@ export interface ClientHydrateProps {
   favoriteProducts: FavoriteProduct[]
 }
 
+export interface ClientUpdateProps {
+  name?: string
+  email?: string
+}
+
 export class Client extends Entity<ClientProps> {
   static hydrate(props: ClientHydrateProps, id: string) {
     return new Client(
@@ -28,6 +33,11 @@ export class Client extends Entity<ClientProps> {
       },
       new UniqueEntityID({ id }),
     )
+  }
+
+  update({ name, email }: ClientUpdateProps) {
+    this.props.name = name ?? this.props.name
+    this.props.email = email ?? this.props.email
   }
 
   get name() {
