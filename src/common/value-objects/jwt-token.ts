@@ -1,4 +1,5 @@
-import jwt, { JwtPayload } from 'jsonwebtoken'
+import type { JwtPayload } from 'jsonwebtoken'
+import jwt from 'jsonwebtoken'
 
 import { ValueObject } from '../entities/value-object'
 
@@ -14,7 +15,9 @@ export interface JwtTokenCreationProps<Data> {
   expires: number
 }
 
-export class JwtToken<Data> extends ValueObject<JwtTokenProps<Data>> {
+export class JwtToken<Data> extends ValueObject<
+  Omit<JwtTokenProps<Data>, 'secret'>
+> {
   public static readonly jwtCookieName = 'stoq-api-service-jwt'
 
   public static create<Dt extends object>({
@@ -22,21 +25,33 @@ export class JwtToken<Data> extends ValueObject<JwtTokenProps<Data>> {
     expires,
     data,
   }: JwtTokenCreationProps<Dt>) {
+    const secret = process.env.JWT_SECRET
+
+    if (!secret) {
+      throw new Error('JWT_SECRET is not set')
+    }
+
     return new JwtToken<Dt>({
       subject,
       data,
-      token: jwt.sign(data, 'secret', { subject, expiresIn: expires }),
+      token: jwt.sign(data, secret, { subject, expiresIn: expires }),
     })
   }
 
   public static hydrate<Dt extends object>({
     token,
   }: Omit<JwtTokenProps<Dt>, 'data' | 'subject'>) {
+    const secret = process.env.JWT_SECRET
+
+    if (!secret) {
+      throw new Error('JWT_SECRET is not set')
+    }
+
     const {
       sub,
       iat: _iat,
       ...data
-    } = jwt.verify(token, 'secret') as JwtPayload & Dt
+    } = jwt.verify(token, secret) as JwtPayload & Dt
 
     return new JwtToken({
       token,

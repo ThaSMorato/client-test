@@ -1,4 +1,4 @@
 export interface UserDAO {
-  doesUserExists(id: string): Promise<boolean>
-  doesAdminExists(id: string): Promise<boolean>
+  doesUserExist(id: string): Promise<boolean>
+  doesAdminExist(id: string): Promise<boolean>
 }
