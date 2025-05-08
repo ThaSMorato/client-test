@@ -1,0 +1,29 @@
+{
+  "extends": [
+    "@thasmorato/eslint-config/node",
+    "plugin:vitest-globals/recommended"
+  ],
+  "env": {
+    "vitest-globals/env" : true
+  },
+  "rules": {
+    "no-useless-constructor": "off",
+    "no-new": "off",
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "argsIgnorePattern": "^_",
+        "varsIgnorePattern": "^_",
+        "caughtErrorsIgnorePattern": "^_",
+        "destructuredArrayIgnorePattern": "^_"
+      }
+    ],
+    "@typescript-eslint/consistent-type-imports": [
+      "error",
+      {
+        "prefer": "type-imports",
+        "disallowTypeAnnotations": false
+      }
+    ]
+  }
+}

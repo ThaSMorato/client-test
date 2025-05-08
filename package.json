@@ -1,0 +1,53 @@
+{
+  "name": "aiqfome-bk-tst",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "prisma": "prisma",
+    "prisma:type": "prisma generate",
+    "migrate:dev": "prisma migrate dev",
+    "studio": "prisma studio",
+    "migrate:prod": "prisma migrate deploy",
+    "start": "node dist/src/index.js",
+    "dev": "tsc -w",
+    "build": "tsc",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:debug": "NODE_OPTIONS=--inspect-brk vitest",
+    "test:cov": "vitest run --coverage"
+  },
+  "keywords": [],
+  "author": "Thales Silva Morato (ThaSMorato)",
+  "license": "ISC",
+  "description": "Aiqfome Backend Test",
+  "type": "module",
+  "engines": {
+    "node": "v22.11.0"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^9.3.0",
+    "@thasmorato/eslint-config": "^1.1.3",
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.10.2",
+    "@vitest/coverage-v8": "2.1.8",
+    "eslint": "8.56",
+    "eslint-plugin-vitest-globals": "^1.5.0",
+    "prettier": "^3.4.2",
+    "prisma": "^6.7.0",
+    "typescript": "^5.8.3",
+    "unplugin-swc": "^1.5.1",
+    "validate-branch-name": "^1.3.1",
+    "vite-tsconfig-paths": "^5.1.4",
+    "vitest": "^2.1.8"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.7.0",
+    "axios": "^1.9.0",
+    "express": "^5.1.0",
+    "inversify": "^7.5.1",
+    "zod": "^3.24.4"
+  },
+  "prisma": {
+    "schema": "./prisma"
+  }
+}

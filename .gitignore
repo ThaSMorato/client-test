@@ -1,0 +1,12 @@
+# env
+.env
+
+# VSCode
+.vscode
+
+# Docker
+.docker/*
+!.docker/.gitkeep
+
+# Node
+node_modules
