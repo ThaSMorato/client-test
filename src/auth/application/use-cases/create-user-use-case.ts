@@ -3,7 +3,7 @@ import type { UserRepository } from '@/auth/enterprise/repositories/user-reposit
 import type { Either } from '@/common/helpers/either'
 import { left, right } from '@/common/helpers/either'
 
-import { UserAlreadyExistsError } from '../errors/user-already-exisits.error'
+import { UserAlreadyExistsError } from '../errors/user-already-exists.error'
 
 interface CreateUserRequest {
   email: string
