@@ -74,4 +74,8 @@ export class User extends Entity<UserProps> {
   public comparePassword(password: string) {
     return this.props.password.compare(password)
   }
+
+  updatePassword(password: string) {
+    this.props.password = Password.create({ password })
+  }
 }
