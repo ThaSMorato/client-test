@@ -5,8 +5,8 @@
 .vscode
 
 # Docker
-.docker/*
-!.docker/.gitkeep
+docker/*
+!docker/.gitkeep
 
 # Node
 node_modules
