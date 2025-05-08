@@ -6,7 +6,7 @@ import { Client } from '@/client/enterprise/entities/client'
 export function createClientInstance({
   id,
   ...props
-}: Partial<ClientHydrateProps & { id: string }>) {
+}: Partial<ClientHydrateProps & { id: string }> = {}) {
   return Client.hydrate(
     {
       email: faker.internet.email(),
