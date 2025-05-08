@@ -21,7 +21,7 @@ export class ToggleFavoriteProductUseCase {
   }: ToggleFavoriteProductRequest): Promise<
     Either<ResourceNotFoundError, null>
   > {
-    const client = await this.clientRepository.findByOneId(clientId)
+    const client = await this.clientRepository.findOneById(clientId)
 
     if (!client) {
       return left(new ResourceNotFoundError())

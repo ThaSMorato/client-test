@@ -16,7 +16,7 @@ export class EditClientDataUseCase {
     id,
     ...props
   }: EditClientDataRequest): Promise<Either<ResourceNotFoundError, null>> {
-    const client = await this.clientRepository.findByOneId(id)
+    const client = await this.clientRepository.findOneById(id)
 
     if (!client) {
       return left(new ResourceNotFoundError())

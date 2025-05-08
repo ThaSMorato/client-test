@@ -1,6 +1,6 @@
-import type { Client } from '../entities/client'
+import type { Client } from '@/client/enterprise/entities/client'
 
 export interface ClientRepository {
-  findByOneId(id: string): Promise<Client | null>
+  findOneById(id: string): Promise<Client | null>
   save(client: Client): Promise<void>
 }

@@ -8,7 +8,7 @@ export class FindClientByIdUseCase {
   constructor(private readonly clientRepository: ClientRepository) {}
 
   async execute(id: string): Promise<Either<ResourceNotFoundError, Client>> {
-    const client = await this.clientRepository.findByOneId(id)
+    const client = await this.clientRepository.findOneById(id)
 
     if (!client) {
       return left(new ResourceNotFoundError())

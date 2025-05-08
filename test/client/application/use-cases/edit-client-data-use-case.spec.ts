@@ -15,7 +15,7 @@ describe('EditClientDataUseCase', () => {
       sut = new EditClientDataUseCase(mockedClientRepository)
     })
     it('should return a ResourceNotFoundError if the client is not found', async () => {
-      clientRepositoryFns.findByOneId.mockResolvedValue(null)
+      clientRepositoryFns.findOneById.mockResolvedValue(null)
       const result = await sut.execute({
         id: '1',
         name: 'John Doe',
@@ -26,7 +26,7 @@ describe('EditClientDataUseCase', () => {
       expect(result.value).toBeInstanceOf(ResourceNotFoundError)
     })
     it('should return a client', async () => {
-      clientRepositoryFns.findByOneId.mockResolvedValue(
+      clientRepositoryFns.findOneById.mockResolvedValue(
         createClientInstance({
           name: 'John Doe',
           email: 'john.doe@example.com',

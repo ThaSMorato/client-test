@@ -23,7 +23,7 @@ describe('ToggleFavoriteProductUseCase', () => {
     })
 
     it('should return a ResourceNotFoundError when the client is not found', async () => {
-      clientRepositoryFns.findByOneId.mockResolvedValue(null)
+      clientRepositoryFns.findOneById.mockResolvedValue(null)
 
       const result = await sut.execute({
         clientId: '1',
@@ -35,7 +35,7 @@ describe('ToggleFavoriteProductUseCase', () => {
     })
 
     it('should return a ResourceNotFoundError when the product is not found', async () => {
-      clientRepositoryFns.findByOneId.mockResolvedValue(createClientInstance())
+      clientRepositoryFns.findOneById.mockResolvedValue(createClientInstance())
       productGatewayFns.findById.mockResolvedValue(null)
 
       const result = await sut.execute({
@@ -51,7 +51,7 @@ describe('ToggleFavoriteProductUseCase', () => {
       const client = createClientInstance()
       const product = createProductDtoInstance()
 
-      clientRepositoryFns.findByOneId.mockResolvedValue(client)
+      clientRepositoryFns.findOneById.mockResolvedValue(client)
       productGatewayFns.findById.mockResolvedValue(product)
 
       const result = await sut.execute({
