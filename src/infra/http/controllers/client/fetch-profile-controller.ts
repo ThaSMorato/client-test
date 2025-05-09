@@ -1,0 +1,53 @@
+import type { Request, Response } from 'express'
+import { inject, injectable } from 'inversify'
+import { z } from 'zod'
+
+import type { FindClientByIdUseCase } from '@/client/application/use-cases/find-client-by-id-use-case'
+import { CLIENT_SYMBOLS } from '@/infra/container/client/symbols'
+
+import { JwtGuard } from '../../guards/jwt-guard'
+import { BaseController } from '../base-controller'
+import { FetchClientByIdPresenter } from './presenters/fetch-client-by-id-presenter'
+
+const fetchProfileSchema = z.object({
+  userId: z.string().uuid(),
+})
+
+@injectable()
+export class FetchProfileController extends BaseController {
+  constructor(
+    @inject(CLIENT_SYMBOLS.FindClientByIdUseCase)
+    private readonly findClientByIdUseCase: FindClientByIdUseCase,
+  ) {
+    super()
+  }
+
+  @JwtGuard
+  async _handle(request: Request, response: Response) {
+    const parsedQuery = fetchProfileSchema.safeParse(request.body)
+
+    if (!parsedQuery.success) {
+      return response.status(400).json({
+        message: 'Invalid Data',
+        errors: parsedQuery.error.issues.map((issue) => issue.message),
+      })
+    }
+
+    const clientResponse = await this.findClientByIdUseCase.execute(
+      parsedQuery.data.userId,
+    )
+
+    if (clientResponse.isLeft()) {
+      return response.status(clientResponse.value.code).json({
+        message: clientResponse.value.message,
+        error: clientResponse.value.name,
+      })
+    }
+
+    const client = clientResponse.value
+
+    return response
+      .status(200)
+      .json({ profile: FetchClientByIdPresenter.toHttp(client) })
+  }
+}
