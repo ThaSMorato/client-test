@@ -28,6 +28,7 @@ describe('CreateUserUseCase', () => {
 
       const response = await sut.execute({
         email: 'any_email',
+        name: 'any_name',
         password: 'password',
       })
 
@@ -42,6 +43,7 @@ describe('CreateUserUseCase', () => {
 
       const response = await sut.execute({
         email: 'a_email@mail.com',
+        name: 'any_name',
         password: 'password',
       })
 

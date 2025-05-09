@@ -6,12 +6,13 @@ import { Email } from '../object-values/email'
 import { Password } from '../object-values/password'
 
 export enum UserRole {
-  ADMIN = 'admin',
-  USER = 'user',
+  ADMIN = 'ADMIN',
+  USER = 'USER',
 }
 
 export interface UserInstanceProps {
   email: string
+  name: string
   password: string
   role: UserRole
   createdAt: Date
@@ -20,6 +21,7 @@ export interface UserInstanceProps {
 
 export interface UserProps {
   email: Email
+  name: string
   password: Password
   role: UserRole
   createdAt: Date
@@ -49,6 +51,10 @@ export class User extends Entity<UserProps> {
       },
       new UniqueEntityID({ id }),
     )
+  }
+
+  get name() {
+    return this.props.name
   }
 
   get email() {

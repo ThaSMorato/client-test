@@ -24,11 +24,13 @@ describe('User', () => {
 
         const user = User.create({
           email: 'test@jhon.com',
+          name: 'test_name',
           password: '123456',
           role: UserRole.USER,
         })
 
         expect(user.email).toEqual('test@jhon.com')
+        expect(user.name).toEqual('test_name')
         expect(user.password).toEqual('hashed-123456')
         expect(user.createdAt).toStrictEqual(new Date('2021-01-01T10:00:00Z'))
       })
@@ -39,6 +41,7 @@ describe('User', () => {
         const user = User.hydrate(
           {
             email: 'test-email',
+            name: 'test_name',
             password: 'test-password',
             role: UserRole.USER,
             createdAt: new Date('2020-01-01T10:00:00Z'),
@@ -48,6 +51,7 @@ describe('User', () => {
         )
 
         expect(user.email).toEqual('test-email')
+        expect(user.name).toEqual('test_name')
         expect(user.password).toEqual('test-password')
         expect(user.role).toEqual(UserRole.USER)
         expect(user.createdAt).toStrictEqual(new Date('2020-01-01T10:00:00Z'))
@@ -64,6 +68,7 @@ describe('User', () => {
         const user = User.hydrate(
           {
             email: 'test-email',
+            name: 'test_name',
             password: '123456',
             role: UserRole.USER,
             createdAt: new Date('2020-01-01T10:00:00Z'),
@@ -80,6 +85,7 @@ describe('User', () => {
         const user = User.hydrate(
           {
             email: 'test-email',
+            name: 'test_name',
             password: '123456',
             role: UserRole.USER,
             createdAt: new Date('2020-01-01T10:00:00Z'),

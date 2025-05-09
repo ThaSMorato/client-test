@@ -1,3 +1,4 @@
+import { Email } from '@/auth/enterprise/object-values/email'
 import { Entity } from '@/common/entities/entity'
 import { UniqueEntityID } from '@/common/value-objects/unique-entity-id'
 
@@ -37,7 +38,7 @@ export class Client extends Entity<ClientProps> {
 
   update({ name, email }: ClientUpdateProps) {
     this.props.name = name ?? this.props.name
-    this.props.email = email ?? this.props.email
+    this.props.email = email ? Email.create({ email }).email : this.props.email
   }
 
   get name() {
