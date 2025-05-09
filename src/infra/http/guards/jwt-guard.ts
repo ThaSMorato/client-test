@@ -40,6 +40,7 @@ export function JwtGuard(
 
       return originalMethod.apply(this, [request, response])
     } catch (error) {
+      console.error('Authentication error:', error);
       return response.status(401).json({
         message: 'Unauthorized',
         error: 'UnauthorizedError',
