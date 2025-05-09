@@ -7,6 +7,7 @@ export const envSchema = z.object({
     .string()
     .url()
     .default('https://fakestoreapi.com/products'),
+  PORT: z.number().default(3333),
 })
 
 export type Env = z.infer<typeof envSchema>
