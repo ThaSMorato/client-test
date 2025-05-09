@@ -21,7 +21,7 @@ export class DeleteClientController extends BaseController {
   @JwtGuard
   @AdminGuard
   async _handle(request: Request, response: Response) {
-    const parsedBody = deleteClientSchema.safeParse(request.body)
+    const parsedBody = deleteClientSchema.safeParse(request.params)
 
     if (!parsedBody.success) {
       return response.status(400).json({

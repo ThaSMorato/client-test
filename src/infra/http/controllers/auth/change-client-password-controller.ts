@@ -26,7 +26,13 @@ export class ChangeClientPasswordController extends BaseController {
   @JwtGuard
   @AdminGuard
   async _handle(request: Request, response: Response) {
-    const parsedBody = changeUserPasswordSchema.safeParse(request.body)
+    const { clientId } = request.params
+    const { password } = request.body
+
+    const parsedBody = changeUserPasswordSchema.safeParse({
+      password,
+      clientId,
+    })
 
     if (!parsedBody.success) {
       return response.status(400).json({
@@ -35,11 +41,9 @@ export class ChangeClientPasswordController extends BaseController {
       })
     }
 
-    const { password, clientId } = parsedBody.data
-
     const userResponse = await this.changeUserPasswordUseCase.execute({
-      password,
-      id: clientId,
+      password: parsedBody.data.password,
+      id: parsedBody.data.clientId,
     })
 
     if (userResponse.isLeft()) {
