@@ -5,6 +5,8 @@ import { JwtToken } from '@/common/value-objects/jwt-token'
 import { diContainer } from '@/infra/container'
 import { AUTH_SYMBOLS } from '@/infra/container/auth/symbols'
 
+import { unauthorizedResponse } from '../helpers/responses'
+
 export function JwtGuard(
   _: unknown,
   __: string,
@@ -16,10 +18,7 @@ export function JwtGuard(
     const jwt = request.cookies[JwtToken.jwtCookieName]
 
     if (!jwt) {
-      return response.status(401).json({
-        message: 'Unauthorized',
-        error: 'UnauthorizedError',
-      })
+      return unauthorizedResponse(response)
     }
 
     try {
@@ -30,20 +29,14 @@ export function JwtGuard(
       const userExists = await userDao.doesUserExist(jwtInstance.subject)
 
       if (!userExists) {
-        return response.status(401).json({
-          message: 'Unauthorized',
-          error: 'UnauthorizedError',
-        })
+        return unauthorizedResponse(response)
       }
 
       request.body.userId = jwtInstance.subject
 
       return originalMethod.apply(this, [request, response])
     } catch (error) {
-      return response.status(401).json({
-        message: 'Unauthorized',
-        error: 'UnauthorizedError',
-      })
+      return unauthorizedResponse(response)
     }
   }
 

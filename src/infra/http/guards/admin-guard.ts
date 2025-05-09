@@ -4,6 +4,8 @@ import type { UserDAO } from '@/common/data/user-dao.interface'
 import { diContainer } from '@/infra/container'
 import { AUTH_SYMBOLS } from '@/infra/container/auth/symbols'
 
+import { unauthorizedResponse } from '../helpers/responses'
+
 export function AdminGuard(
   _: unknown,
   __: string,
@@ -15,10 +17,7 @@ export function AdminGuard(
     const userId = request.body.userId
 
     if (!userId) {
-      return response.status(401).json({
-        message: 'Unauthorized',
-        error: 'UnauthorizedError',
-      })
+      return unauthorizedResponse(response)
     }
 
     try {
@@ -27,18 +26,12 @@ export function AdminGuard(
       const adminExists = await userDao.doesAdminExist(userId)
 
       if (!adminExists) {
-        return response.status(401).json({
-          message: 'Unauthorized',
-          error: 'UnauthorizedError',
-        })
+        return unauthorizedResponse(response)
       }
 
       return originalMethod.apply(this, [request, response])
     } catch (error) {
-      return response.status(401).json({
-        message: 'Unauthorized',
-        error: 'UnauthorizedError',
-      })
+      return unauthorizedResponse(response)
     }
   }
 
