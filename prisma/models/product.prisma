@@ -7,8 +7,8 @@ model Product {
   imageUrl String @map("image_url")
   price    Float
 
-  reviewScore Float @map("review_score")
-  reviewCount Int   @map("review_count")
+  reviewScore Float? @map("review_score")
+  reviewCount Int?   @map("review_count")
 
   createdAt DateTime  @default(now()) @map("created_at")
   updatedAt DateTime? @updatedAt @map("updated_at")
