@@ -18,7 +18,7 @@ export interface JwtTokenCreationProps<Data> {
 export class JwtToken<Data> extends ValueObject<
   Omit<JwtTokenProps<Data>, 'secret'>
 > {
-  public static readonly jwtCookieName = 'stoq-api-service-jwt'
+  public static readonly jwtCookieName = 'aiqfome-api-service-jwt'
 
   public static create<Dt extends object>({
     subject,
