@@ -12,6 +12,7 @@ export enum UserRole {
 
 export interface UserInstanceProps {
   email: string
+  name: string
   password: string
   role: UserRole
   createdAt: Date
@@ -20,6 +21,7 @@ export interface UserInstanceProps {
 
 export interface UserProps {
   email: Email
+  name: string
   password: Password
   role: UserRole
   createdAt: Date
@@ -49,6 +51,10 @@ export class User extends Entity<UserProps> {
       },
       new UniqueEntityID({ id }),
     )
+  }
+
+  get name() {
+    return this.props.name
   }
 
   get email() {

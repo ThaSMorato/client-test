@@ -7,6 +7,7 @@ import { UserAlreadyExistsError } from '../errors/user-already-exists.error'
 
 interface CreateUserRequest {
   email: string
+  name: string
   password: string
 }
 
@@ -15,6 +16,7 @@ export class CreateUserUseCase {
 
   async execute({
     email,
+    name,
     password,
   }: CreateUserRequest): Promise<Either<UserAlreadyExistsError, null>> {
     const userExists = await this.userRepository.findOneByEmail(email)
@@ -25,6 +27,7 @@ export class CreateUserUseCase {
 
     const user = User.create({
       email,
+      name,
       password,
       role: UserRole.USER,
     })

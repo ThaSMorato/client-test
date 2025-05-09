@@ -10,6 +10,7 @@ export function createUserInstance({
   const instance = User.hydrate(
     {
       email: faker.internet.email(),
+      name: faker.person.fullName(),
       password: faker.internet.password(),
       role: UserRole.USER,
       createdAt: faker.date.recent(),
