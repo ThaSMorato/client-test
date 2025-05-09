@@ -36,6 +36,7 @@ export function JwtGuard(
 
       return originalMethod.apply(this, [request, response])
     } catch (error) {
+      console.error('Authentication error:', error)
       return unauthorizedResponse(response)
     }
   }
