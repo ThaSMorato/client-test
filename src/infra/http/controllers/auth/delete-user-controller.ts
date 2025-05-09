@@ -39,8 +39,6 @@ export class DeleteUserController extends BaseController {
       })
     }
 
-    return response.status(200).json({
-      message: 'User deleted successfully',
-    })
+    return response.status(204).send()
   }
 }

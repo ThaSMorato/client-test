@@ -47,8 +47,6 @@ export class CreateUserController extends BaseController {
       })
     }
 
-    const user = userResponse.value
-
-    return response.status(201).json(user)
+    return response.status(201).send()
   }
 }

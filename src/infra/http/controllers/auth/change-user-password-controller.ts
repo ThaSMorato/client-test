@@ -47,8 +47,6 @@ export class ChangeUserPasswordController extends BaseController {
       })
     }
 
-    return response.status(200).json({
-      message: 'Password changed successfully',
-    })
+    return response.status(204).send()
   }
 }
