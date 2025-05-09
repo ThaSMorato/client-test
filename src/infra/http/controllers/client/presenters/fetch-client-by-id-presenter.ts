@@ -3,7 +3,7 @@ import type { Client } from '@/client/enterprise/entities/client'
 export class FetchClientByIdPresenter {
   static toHttp(client: Client) {
     return {
-      id: client.id,
+      id: client.id.toString(),
       name: client.name,
       email: client.email,
       favoriteProducts: client.favoriteProducts.map(
@@ -16,7 +16,7 @@ export class FetchClientByIdPresenter {
           reviewScore,
           title,
         }) => ({
-          id,
+          id: id.toString(),
           productId,
           imageUrl,
           price,

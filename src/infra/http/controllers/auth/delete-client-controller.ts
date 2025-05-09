@@ -1,8 +1,9 @@
 import type { Request, Response } from 'express'
-import { injectable } from 'inversify'
+import { inject, injectable } from 'inversify'
 import { z } from 'zod'
 
 import type { DeleteUserUseCase } from '@/auth/application/use-cases/delete-user-use-case'
+import { AUTH_SYMBOLS } from '@/infra/container/auth/symbols'
 
 import { AdminGuard } from '../../guards/admin-guard'
 import { JwtGuard } from '../../guards/jwt-guard'
@@ -14,7 +15,10 @@ const deleteClientSchema = z.object({
 
 @injectable()
 export class DeleteClientController extends BaseController {
-  constructor(private readonly deleteUserUseCase: DeleteUserUseCase) {
+  constructor(
+    @inject(AUTH_SYMBOLS.DeleteUserUseCase)
+    private readonly deleteUserUseCase: DeleteUserUseCase,
+  ) {
     super()
   }
 

@@ -5,6 +5,7 @@ import { z } from 'zod'
 import type { FindClientByIdUseCase } from '@/client/application/use-cases/find-client-by-id-use-case'
 import { CLIENT_SYMBOLS } from '@/infra/container/client/symbols'
 
+import { ClientGuard } from '../../guards/client-guard'
 import { JwtGuard } from '../../guards/jwt-guard'
 import { BaseController } from '../base-controller'
 import { FetchClientByIdPresenter } from './presenters/fetch-client-by-id-presenter'
@@ -23,6 +24,7 @@ export class FetchProfileController extends BaseController {
   }
 
   @JwtGuard
+  @ClientGuard
   async _handle(request: Request, response: Response) {
     const parsedQuery = fetchProfileSchema.safeParse(request.body)
 

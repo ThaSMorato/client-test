@@ -10,8 +10,8 @@ import { JwtGuard } from '../../guards/jwt-guard'
 import { BaseController } from '../base-controller'
 
 const editClientDataSchema = z.object({
-  name: z.string(),
-  email: z.string(),
+  name: z.string().optional(),
+  email: z.string().optional(),
   clientId: z.string().uuid(),
 })
 

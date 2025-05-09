@@ -5,12 +5,13 @@ import { z } from 'zod'
 import type { EditClientDataUseCase } from '@/client/application/use-cases/edit-client-data-use-case'
 import { CLIENT_SYMBOLS } from '@/infra/container/client/symbols'
 
+import { ClientGuard } from '../../guards/client-guard'
 import { JwtGuard } from '../../guards/jwt-guard'
 import { BaseController } from '../base-controller'
 
 const editOwnDataSchema = z.object({
-  name: z.string(),
-  email: z.string(),
+  name: z.string().optional(),
+  email: z.string().optional(),
   userId: z.string().uuid(),
 })
 
@@ -24,6 +25,7 @@ export class EditOwnDataController extends BaseController {
   }
 
   @JwtGuard
+  @ClientGuard
   async _handle(request: Request, response: Response) {
     const parsedQuery = editOwnDataSchema.safeParse(request.body)
 
