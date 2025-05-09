@@ -27,7 +27,14 @@ export class EditClientDataController extends BaseController {
   @JwtGuard
   @AdminGuard
   async _handle(request: Request, response: Response) {
-    const parsedQuery = editClientDataSchema.safeParse(request.body)
+    const { clientId } = request.params
+    const { name, email } = request.body
+
+    const parsedQuery = editClientDataSchema.safeParse({
+      name,
+      email,
+      clientId,
+    })
 
     if (!parsedQuery.success) {
       return response.status(400).json({
@@ -36,12 +43,12 @@ export class EditClientDataController extends BaseController {
       })
     }
 
-    const { name, email, clientId } = parsedQuery.data
+    const data = parsedQuery.data
 
     const stoqResponse = await this.editClientDataUseCase.execute({
-      name,
-      email,
-      id: clientId,
+      name: data.name,
+      email: data.email,
+      id: data.clientId,
     })
 
     if (stoqResponse.isLeft()) {

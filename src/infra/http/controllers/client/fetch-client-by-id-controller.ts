@@ -26,7 +26,7 @@ export class FetchClientByIdController extends BaseController {
   @JwtGuard
   @AdminGuard
   async _handle(request: Request, response: Response) {
-    const parsedQuery = fetchClientByIdSchema.safeParse(request.body)
+    const parsedQuery = fetchClientByIdSchema.safeParse(request.params)
 
     if (!parsedQuery.success) {
       return response.status(400).json({
