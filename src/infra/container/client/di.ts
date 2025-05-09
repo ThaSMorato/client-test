@@ -7,12 +7,25 @@ import type { ProductGateway } from '@/client/enterprise/gateways/product-gatewa
 import type { ClientRepository } from '@/client/enterprise/repositories/client-repository.interface'
 import { PrismaClientRepository } from '@/infra/db/prisma/repositories/prisma-client-repository'
 import { AxiosProductGateway } from '@/infra/gateways/axios/product/axios-product-gateway'
+import { EditClientDataController } from '@/infra/http/controllers/client/edit-client-data-controller'
+import { EditOwnDataController } from '@/infra/http/controllers/client/edit-own-data-controller'
+import { FetchClientByIdController } from '@/infra/http/controllers/client/fetch-client-by-id-controller'
+import { FetchProfileController } from '@/infra/http/controllers/client/fetch-profile-controller'
+import { ToggleFavoriteProductController } from '@/infra/http/controllers/client/toggle-favorite-product-controller'
 
 import { CLIENT_SYMBOLS } from './symbols'
 
 export const clientDiContainer = new ContainerModule(({ bind }) => {
   bind(CLIENT_SYMBOLS.ProductGateway).to(AxiosProductGateway)
   bind(CLIENT_SYMBOLS.ClientRepository).to(PrismaClientRepository)
+
+  bind(CLIENT_SYMBOLS.EditClientDataController).to(EditClientDataController)
+  bind(CLIENT_SYMBOLS.EditOwnDataController).to(EditOwnDataController)
+  bind(CLIENT_SYMBOLS.FetchProfileController).to(FetchProfileController)
+  bind(CLIENT_SYMBOLS.FetchClientByIdController).to(FetchClientByIdController)
+  bind(CLIENT_SYMBOLS.ToggleFavoriteProductController).to(
+    ToggleFavoriteProductController,
+  )
 
   bind(CLIENT_SYMBOLS.EditClientDataUseCase).toDynamicValue((context) => {
     const clientRepository = context.get<ClientRepository>(
