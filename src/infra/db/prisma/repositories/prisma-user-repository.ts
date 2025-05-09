@@ -4,7 +4,7 @@ import type { User } from '@/auth/enterprise/entities/user'
 import { UserRole } from '@/auth/enterprise/entities/user'
 import type { UserRepository } from '@/auth/enterprise/repositories/user-repository.interface'
 import type { UserDAO } from '@/common/data/user-dao.interface'
-import { COMMON_SYMBOLS } from '@/infra/container/infra/symbols'
+import { INFRA_SYMBOLS } from '@/infra/container/infra/symbols'
 
 import { PrismaUserMapper } from '../mappers/prisma-user-mapper'
 import type { PrismaService } from '../prisma-service'
@@ -12,7 +12,7 @@ import type { PrismaService } from '../prisma-service'
 @injectable()
 export class PrismaUserRepository implements UserRepository, UserDAO {
   constructor(
-    @inject(COMMON_SYMBOLS.PrismaService) private prismaService: PrismaService,
+    @inject(INFRA_SYMBOLS.PrismaService) private prismaService: PrismaService,
   ) {}
 
   async save(user: User): Promise<void> {

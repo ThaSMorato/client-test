@@ -6,7 +6,7 @@ import type {
   ProductDTO,
   ProductGateway,
 } from '@/client/enterprise/gateways/product-gateway.interface'
-import { COMMON_SYMBOLS } from '@/infra/container/infra/symbols'
+import { INFRA_SYMBOLS } from '@/infra/container/infra/symbols'
 import type { EnvService } from '@/infra/env/env-service'
 
 type ProductApiResponse = {
@@ -27,7 +27,7 @@ export class AxiosProductGateway implements ProductGateway {
   private readonly axiosInstance: AxiosInstance
 
   constructor(
-    @inject(COMMON_SYMBOLS.EnvService) private readonly envService: EnvService,
+    @inject(INFRA_SYMBOLS.EnvService) private readonly envService: EnvService,
   ) {
     this.axiosInstance = axios.create({
       baseURL: this.envService.get('PRODUCT_API_URL'),
