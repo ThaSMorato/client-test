@@ -15,18 +15,18 @@ export class PrismaClientRepository implements ClientRepository {
   ) {}
 
   async save(client: Client): Promise<void> {
-    const data = PrismaClientMapper.toPersistence(client)
+    const { id, favoriteProducts, ...data } =
+      PrismaClientMapper.toPersistence(client)
 
     await this.prismaService.user.update({
       where: {
-        id: client.id.toString(),
+        id,
       },
       data: {
-        name: data.name,
-        email: data.email,
+        ...data,
         favoriteProducts: {
-          create: data.favoriteProducts.create,
-          delete: data.favoriteProducts.delete,
+          create: favoriteProducts.create,
+          delete: favoriteProducts.delete,
         },
       },
     })

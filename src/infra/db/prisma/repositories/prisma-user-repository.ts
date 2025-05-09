@@ -16,9 +16,12 @@ export class PrismaUserRepository implements UserRepository, UserDAO {
   ) {}
 
   async save(user: User): Promise<void> {
-    const data = PrismaUserMapper.toPersistence(user)
+    const { id, ...data } = PrismaUserMapper.toPersistence(user)
 
-    await this.prismaService.user.create({
+    await this.prismaService.user.update({
+      where: {
+        id,
+      },
       data,
     })
   }
