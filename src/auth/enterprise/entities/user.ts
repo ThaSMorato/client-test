@@ -6,8 +6,8 @@ import { Email } from '../object-values/email'
 import { Password } from '../object-values/password'
 
 export enum UserRole {
-  ADMIN = 'admin',
-  USER = 'user',
+  ADMIN = 'ADMIN',
+  USER = 'USER',
 }
 
 export interface UserInstanceProps {
