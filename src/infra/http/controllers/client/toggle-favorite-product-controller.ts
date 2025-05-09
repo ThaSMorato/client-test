@@ -48,6 +48,6 @@ export class ToggleFavoriteProductController extends BaseController {
       })
     }
 
-    return response.status(204)
+    return response.status(204).send()
   }
 }
