@@ -35,6 +35,7 @@ export function AdminGuard(
 
       return originalMethod.apply(this, [request, response])
     } catch (error) {
+      console.error('Error during admin verification:', error);
       return response.status(401).json({
         message: 'Unauthorized',
         error: 'UnauthorizedError',
