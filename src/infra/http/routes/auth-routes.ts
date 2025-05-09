@@ -40,13 +40,13 @@ export class AuthRoutes extends Router {
         this.authenticateUserController,
       ),
     )
-    this.expressRouter.post(
+    this.expressRouter.patch(
       '/change-password',
       this.changeUserPasswordController.handle.bind(
         this.changeUserPasswordController,
       ),
     )
-    this.expressRouter.post(
+    this.expressRouter.patch(
       '/client/:clientId/change-password',
       this.changeClientPasswordController.handle.bind(
         this.changeClientPasswordController,
