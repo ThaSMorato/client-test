@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "module": "ES2015",
+    "module": "commonjs",
     "target": "es2018",
     "lib": ["es2018"],
     "noImplicitReturns": true,
@@ -15,7 +15,7 @@
     "outDir": "./build",
     "preserveConstEnums": true,
     "allowJs": true,
-    "moduleResolution": "bundler",
+    "moduleResolution": "node",
     "baseUrl": "./",
     "incremental": true,
     "skipLibCheck": true,
@@ -28,10 +28,12 @@
     "noFallthroughCasesInSwitch": false,
     "esModuleInterop": true,
     "paths": {
-      "@/*": ["./src/*"],
-      "$/*": ["./test/*"]
+      "@/*" : ["./src/*"],
+      "$/*" : ["./test/*"]
     },
-    "types": ["vitest/globals"]
+    "types": [
+      "vitest/globals"
+    ]
   },
   "exclude": ["node_modules", "coverage", "build"]
 }

@@ -6,10 +6,14 @@
 
 # Docker
 docker/*
-!docker/.gitkeep
+!docker/builders
+
 
 # Node
 node_modules
 
 # Test
 coverage
+
+# Build
+build
