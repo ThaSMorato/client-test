@@ -2,11 +2,13 @@ import cookie from 'cookie-parser'
 import cors from 'cors'
 import type { Express } from 'express'
 import express from 'express'
+import swaggerUi from 'swagger-ui-express'
 
 import { diContainer } from '../container'
 import { INFRA_SYMBOLS } from '../container/infra/symbols'
 import type { AuthRoutes } from './routes/auth-routes'
 import type { ClientRoutes } from './routes/client-routes'
+import { swaggerSpec } from './swagger'
 
 export class App {
   private app: Express
@@ -34,6 +36,8 @@ export class App {
     authRoutes.create()
 
     this.app.use(clientRoutes.expressRouter, authRoutes.expressRouter)
+    // Swagger documentation
+    this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
     return this
   }
 
