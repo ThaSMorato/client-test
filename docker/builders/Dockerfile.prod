@@ -1,4 +1,4 @@
-FROM --platform=linux/amd64 node:22 AS builder
+FROM node:22.11.0 AS builder
 
 WORKDIR /usr/src/app
 
@@ -10,12 +10,15 @@ COPY tsconfig.json ./
 COPY tsconfig.build.json ./
 # COPY tsup.config.ts ./
 COPY src ./src
+COPY prisma ./prisma
 
 RUN pnpm install
 
+RUN pnpm prisma:type
+
 RUN pnpm build
 
-FROM --platform=linux/amd64 node:22 AS installer
+FROM node:22.11.0 AS installer
 
 WORKDIR /usr/src/app
 
@@ -23,19 +26,25 @@ RUN npm i -g pnpm
 
 COPY package.json ./
 COPY pnpm-lock.yaml ./
+COPY prisma ./prisma
 
 RUN pnpm install --prod
 
-FROM --platform=linux/amd64 node:22.13.1-slim AS production
+RUN npx prisma generate
+
+FROM node:22.11.0-slim AS production
+
+ARG PORT=3333
 
 RUN npm i -g pnpm
 
+RUN apt-get update && apt-get install -y openssl
 WORKDIR /usr/src/app
 
 COPY --from=builder /usr/src/app/build ./build
 COPY --from=installer /usr/src/app/node_modules ./node_modules
 COPY package.json ./
 
-EXPOSE 3000
+EXPOSE ${PORT}
 
 ENTRYPOINT [ "pnpm", "start" ]
