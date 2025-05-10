@@ -9,5 +9,4 @@ export type ProductDTO = {
 
 export interface ProductGateway {
   findById(id: string): Promise<ProductDTO | null>
-  getProducts(): Promise<ProductDTO[]>
 }
