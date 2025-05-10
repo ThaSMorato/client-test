@@ -1,0 +1,41 @@
+FROM --platform=linux/amd64 node:22 AS builder
+
+WORKDIR /usr/src/app
+
+RUN npm i -g pnpm
+
+COPY package.json ./
+COPY pnpm-lock.yaml ./
+COPY tsconfig.json ./
+COPY tsconfig.build.json ./
+# COPY tsup.config.ts ./
+COPY src ./src
+
+RUN pnpm install
+
+RUN pnpm build
+
+FROM --platform=linux/amd64 node:22 AS installer
+
+WORKDIR /usr/src/app
+
+RUN npm i -g pnpm
+
+COPY package.json ./
+COPY pnpm-lock.yaml ./
+
+RUN pnpm install --prod
+
+FROM --platform=linux/amd64 node:22.13.1-slim AS production
+
+RUN npm i -g pnpm
+
+WORKDIR /usr/src/app
+
+COPY --from=builder /usr/src/app/build ./build
+COPY --from=installer /usr/src/app/node_modules ./node_modules
+COPY package.json ./
+
+EXPOSE 3000
+
+ENTRYPOINT [ "pnpm", "start" ]
