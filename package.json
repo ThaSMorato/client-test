@@ -14,7 +14,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:debug": "NODE_OPTIONS=--inspect-brk vitest",
-    "test:cov": "vitest run --coverage",
+    "test:cov": "vitest run --coverage --config ./vitest.config.cov.ts",
     "test:e2e": "vitest run --config ./vitest.config.e2e.ts",
     "test:e2e:watch": "vitest --config ./vitest.config.e2e.ts"
   },
