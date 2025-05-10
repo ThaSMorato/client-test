@@ -13,6 +13,46 @@ const changeUserPasswordSchema = z.object({
   userId: z.string().uuid(),
 })
 
+/**
+ * @swagger
+ * /change-password:
+ *   patch:
+ *     tags:
+ *       - Auth
+ *     summary: Altera a senha do usuário
+ *     description: Endpoint para alteração de senha do usuário logado
+ *     security:
+ *       - jwt: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - password
+ *             properties:
+ *               password:
+ *                 type: string
+ *                 format: password
+ *                 minLength: 8
+ *                 example: novaSenha123
+ *     responses:
+ *       204:
+ *         description: Senha alterada com sucesso
+ *       400:
+ *         description: Dados inválidos
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ValidationError'
+ *       401:
+ *         description: Não autorizado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ */
 @injectable()
 export class ChangeUserPasswordController extends BaseController {
   constructor(
