@@ -13,6 +13,59 @@ const authenticateUserSchema = z.object({
   password: z.string(),
 })
 
+/**
+ * @swagger
+ * /login:
+ *   post:
+ *     tags:
+ *       - Auth
+ *     summary: Autentica um usuário
+ *     description: Endpoint para login de usuários
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - email
+ *               - password
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 example: joao@example.com
+ *               password:
+ *                 type: string
+ *                 format: password
+ *                 example: senha123
+ *     responses:
+ *       202:
+ *         description: Login realizado com sucesso
+ *         headers:
+ *           Set-Cookie:
+ *             schema:
+ *               type: string
+ *               example: jwt=token; HttpOnly; Path=/; Expires=Thu, 21 Oct 2024 07:28:00 GMT
+ *       400:
+ *         description: Dados inválidos
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ValidationError'
+ *       401:
+ *         description: Credenciais inválidas
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       404:
+ *         description: Usuário não encontrado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ */
 @injectable()
 export class AuthenticateUserController extends BaseController {
   constructor(
