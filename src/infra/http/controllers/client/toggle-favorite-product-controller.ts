@@ -11,7 +11,7 @@ import { BaseController } from '../base-controller'
 
 const toggleFavoriteProductSchema = z.object({
   userId: z.string().uuid(),
-  productId: z.string().uuid(),
+  productId: z.string(),
 })
 
 @injectable()
@@ -26,7 +26,13 @@ export class ToggleFavoriteProductController extends BaseController {
   @JwtGuard
   @ClientGuard
   async _handle(request: Request, response: Response) {
-    const parsedQuery = toggleFavoriteProductSchema.safeParse(request.body)
+    const { productId } = request.params
+    const { userId } = request.body
+
+    const parsedQuery = toggleFavoriteProductSchema.safeParse({
+      productId,
+      userId,
+    })
 
     if (!parsedQuery.success) {
       return response.status(400).json({

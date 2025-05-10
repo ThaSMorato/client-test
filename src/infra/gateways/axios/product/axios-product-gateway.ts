@@ -52,17 +52,4 @@ export class AxiosProductGateway implements ProductGateway {
       reviewCount: response.data.rating?.count,
     }
   }
-
-  async getProducts(): Promise<ProductDTO[]> {
-    const response = await this.axiosInstance.get<ProductApiResponse[]>('/')
-
-    return response.data.map((product) => ({
-      id: product.id.toString(),
-      title: product.title,
-      price: product.price,
-      imageUrl: product.image,
-      reviewScore: product.rating?.rate,
-      reviewCount: product.rating?.count,
-    }))
-  }
 }

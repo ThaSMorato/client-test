@@ -25,7 +25,7 @@ export class PrismaClientRepository implements ClientRepository {
       data: {
         ...data,
         favoriteProducts: {
-          create: favoriteProducts.create,
+          create: favoriteProducts.create.map(({ userId: _, ...prod }) => prod),
           delete: favoriteProducts.delete,
         },
       },

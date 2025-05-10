@@ -8,11 +8,18 @@ export default defineConfig({
     root: './',
     clearMocks: true,
     passWithNoTests: true,
+    setupFiles: ['./test/e2e/setup-e2e.ts'],
+    include: ['**/*.e2e-spec.ts', '**/*.spec.ts'],
     coverage: {
       exclude: [
         'src/**/*.interface.ts',
         'src/**/*.error.ts',
         'src/**/*.types.ts',
+        'src/common/*',
+        'src/infra/db/*',
+        'src/infra/env/*',
+        'src/infra/http/*',
+        'src/infra/gateways/*',
       ],
       provider: 'v8',
       include: ['src/**/*.ts'],

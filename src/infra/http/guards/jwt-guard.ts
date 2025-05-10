@@ -32,7 +32,12 @@ export function JwtGuard(
         return unauthorizedResponse(response)
       }
 
-      request.body.userId = jwtInstance.subject
+      const body = {
+        ...request.body,
+        userId: jwtInstance.subject,
+      }
+
+      request.body = body
 
       return originalMethod.apply(this, [request, response])
     } catch (error) {

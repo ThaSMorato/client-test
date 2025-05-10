@@ -17,6 +17,10 @@ describe('User', () => {
     })
   })
 
+  afterAll(() => {
+    vi.useRealTimers()
+  })
+
   describe('UT', () => {
     describe('create', () => {
       it('should create a user object with the created date as now', () => {

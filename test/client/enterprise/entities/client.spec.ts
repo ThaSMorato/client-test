@@ -1,6 +1,8 @@
+import { InvalidEmailError } from '@/auth/enterprise/errors/invalid-email.error'
 import { Client } from '@/client/enterprise/entities/client'
 import { ProductAlreadyInFavoriteListError } from '@/client/enterprise/errors/product-already-in-favorite-list.error'
 import { ProductNotInFavoriteListError } from '@/client/enterprise/errors/product-not-in-favorite-list.error'
+import { createClientInstance } from '$/factories/client/client-factories'
 import { createFavoriteProductInstance } from '$/factories/client/favorite-product-factories'
 
 describe('Client', () => {
@@ -113,7 +115,7 @@ describe('Client', () => {
     })
   })
   describe('toggleFavoriteProduct', () => {
-    it('should toggle a favorite product', () => {
+    it('should add a favorite product', () => {
       const client = Client.hydrate(
         {
           name: 'John Doe',
@@ -140,6 +142,32 @@ describe('Client', () => {
           }),
         ]),
       )
+    })
+    it('should remove a favorite product', () => {
+      const client = Client.hydrate(
+        {
+          name: 'John Doe',
+          email: 'john.doe@example.com',
+          favoriteProducts: [
+            createFavoriteProductInstance({
+              productId: '1',
+              title: 'Product 1',
+            }),
+          ],
+        },
+        '1',
+      )
+
+      client.toggleFavoriteProduct({
+        id: '1',
+        title: 'Product 1',
+        imageUrl: 'https://example.com/product-1.jpg',
+        price: 100,
+        reviewScore: 4.5,
+        reviewCount: 10,
+      })
+
+      expect(client.favoriteProducts).toEqual([])
     })
   })
   describe('alreadyInFavoriteList', () => {
@@ -172,6 +200,60 @@ describe('Client', () => {
       )
 
       expect(client.alreadyInFavoriteList('1')).toBe(false)
+    })
+  })
+  describe('update', () => {
+    it('should update the client name', () => {
+      const client = createClientInstance({
+        name: 'John Doe',
+        email: 'john.doe@example.com',
+      })
+
+      client.update({
+        name: 'Jane Doe',
+      })
+
+      expect(client.name).toBe('Jane Doe')
+      expect(client.email).toBe('john.doe@example.com')
+    })
+    it('should update the client email', () => {
+      const client = createClientInstance({
+        name: 'John Doe',
+        email: 'john.doe@example.com',
+      })
+
+      client.update({
+        email: 'jane.doe@example.com',
+      })
+
+      expect(client.name).toBe('John Doe')
+      expect(client.email).toBe('jane.doe@example.com')
+    })
+    it('should update the client data', () => {
+      const client = createClientInstance({
+        name: 'John Doe',
+        email: 'john.doe@example.com',
+      })
+
+      client.update({
+        email: 'jane.doe@example.com',
+        name: 'Jane Doe',
+      })
+
+      expect(client.name).toBe('Jane Doe')
+      expect(client.email).toBe('jane.doe@example.com')
+    })
+    it('should throw an error if the client data is invalid', () => {
+      const client = createClientInstance({
+        name: 'John Doe',
+        email: 'john.doe@example.com',
+      })
+
+      expect(() =>
+        client.update({
+          email: 'invalid-email',
+        }),
+      ).toThrow(InvalidEmailError)
     })
   })
 })
