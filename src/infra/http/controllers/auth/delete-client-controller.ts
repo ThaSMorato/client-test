@@ -13,6 +13,46 @@ const deleteClientSchema = z.object({
   clientId: z.string().uuid(),
 })
 
+/**
+ * @swagger
+ * /client/{clientId}:
+ *   delete:
+ *     tags:
+ *       - Admin
+ *     summary: Deleta um cliente
+ *     description: Endpoint para deletar um cliente (apenas admin)
+ *     security:
+ *       - jwt: []
+ *     parameters:
+ *       - in: path
+ *         name: clientId
+ *         required: true
+ *         schema:
+ *           type: string
+ *           format: uuid
+ *         example: 123e4567-e89b-12d3-a456-426614174000
+ *     responses:
+ *       204:
+ *         description: Cliente deletado com sucesso
+ *       400:
+ *         description: Dados inválidos
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ValidationError'
+ *       401:
+ *         description: Não autorizado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       404:
+ *         description: Cliente não encontrado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ */
 @injectable()
 export class DeleteClientController extends BaseController {
   constructor(
