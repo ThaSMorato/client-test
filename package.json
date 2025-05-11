@@ -14,9 +14,9 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:debug": "NODE_OPTIONS=--inspect-brk vitest",
-    "test:cov": "vitest run --coverage --config ./vitest.config.cov.ts",
-    "test:e2e": "vitest run --config ./vitest.config.e2e.ts",
-    "test:e2e:watch": "vitest --config ./vitest.config.e2e.ts"
+    "test:cov": "vitest run --coverage --config ./vitest.config.cov.mts",
+    "test:e2e": "vitest run --config ./vitest.config.e2e.mts",
+    "test:e2e:watch": "vitest --config ./vitest.config.e2e.mts"
   },
   "keywords": [],
   "author": "Thales Silva Morato (ThaSMorato)",
