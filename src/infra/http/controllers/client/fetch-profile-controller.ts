@@ -14,6 +14,33 @@ const fetchProfileSchema = z.object({
   userId: z.string().uuid(),
 })
 
+/**
+ * @swagger
+ * /profile:
+ *   get:
+ *     tags:
+ *       - Client
+ *     summary: Busca o perfil do usuário logado
+ *     description: Endpoint para buscar dados do próprio perfil
+ *     security:
+ *       - jwt: []
+ *     responses:
+ *       200:
+ *         description: Perfil encontrado com sucesso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 profile:
+ *                   $ref: '#/components/schemas/Client'
+ *       401:
+ *         description: Não autorizado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ */
 @injectable()
 export class FetchProfileController extends BaseController {
   constructor(
