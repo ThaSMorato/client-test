@@ -85,7 +85,7 @@ describe('Edit Client Data E2E', () => {
     })
   })
 
-  it('should return 500 if invalid data is provided', async () => {
+  it('should return 400 if invalid data is provided', async () => {
     const token = await jwtMother.createAdminJwt()
     const user = await userFactory.makePrismaUser()
 
@@ -94,9 +94,26 @@ describe('Edit Client Data E2E', () => {
       .set('Cookie', `${JwtToken.jwtCookieName}=${token}`)
       .send({ name: 'new_name', email: 'new_emailemail.com' })
 
-    expect(response.status).toBe(500)
+    expect(response.status).toBe(400)
     expect(response.body).toEqual({
-      message: 'Internal Server Error',
+      message: 'Invalid Data',
+      errors: ['Invalid email'],
+    })
+  })
+
+  it('should return 409 if email already exists', async () => {
+    const token = await jwtMother.createAdminJwt()
+    const user = await userFactory.makePrismaUser()
+    const anotherUser = await userFactory.makePrismaUser()
+    const response = await request(app.httpServerInstance)
+      .put(`/client/${user.id}`)
+      .set('Cookie', `${JwtToken.jwtCookieName}=${token}`)
+      .send({ name: 'new_name', email: anotherUser.email })
+
+    expect(response.status).toBe(409)
+    expect(response.body).toEqual({
+      error: 'EmailAlreadyExistsError',
+      message: 'Email already exists',
     })
   })
 

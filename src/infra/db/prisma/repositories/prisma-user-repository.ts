@@ -15,6 +15,19 @@ export class PrismaUserRepository implements UserRepository, UserDAO {
     @inject(INFRA_SYMBOLS.PrismaService) private prismaService: PrismaService,
   ) {}
 
+  async doesUserEmailExist(email: string): Promise<boolean> {
+    const user = await this.prismaService.user.findUnique({
+      where: {
+        email,
+      },
+      select: {
+        id: true,
+      },
+    })
+
+    return !!user
+  }
+
   async doesClientExist(id: string): Promise<boolean> {
     const client = await this.prismaService.user.findUnique({
       where: {
