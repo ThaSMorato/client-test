@@ -11,10 +11,56 @@ import { BaseController } from '../base-controller'
 
 const editOwnDataSchema = z.object({
   name: z.string().optional(),
-  email: z.string().optional(),
+  email: z.string().email().optional(),
   userId: z.string().uuid(),
 })
 
+/**
+ * @swagger
+ * /profile:
+ *   put:
+ *     tags:
+ *       - Client
+ *     summary: Edita dados do próprio perfil
+ *     description: Endpoint para editar dados do próprio perfil
+ *     security:
+ *       - jwt: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 example: João Silva
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 example: joao@example.com
+ *     responses:
+ *       204:
+ *         description: Dados atualizados com sucesso
+ *       400:
+ *         description: Dados inválidos
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ValidationError'
+ *       401:
+ *         description: Não autorizado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       409:
+ *         description: Email já cadastrado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ */
 @injectable()
 export class EditOwnDataController extends BaseController {
   constructor(
