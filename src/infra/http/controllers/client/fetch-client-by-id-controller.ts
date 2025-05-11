@@ -14,6 +14,53 @@ const fetchClientByIdSchema = z.object({
   clientId: z.string().uuid(),
 })
 
+/**
+ * @swagger
+ * /client/{clientId}:
+ *   get:
+ *     tags:
+ *       - Admin
+ *     summary: Busca um cliente por ID
+ *     description: Endpoint para buscar dados de um cliente específico (apenas admin)
+ *     security:
+ *       - jwt: []
+ *     parameters:
+ *       - in: path
+ *         name: clientId
+ *         required: true
+ *         schema:
+ *           type: string
+ *           format: uuid
+ *         example: 123e4567-e89b-12d3-a456-426614174000
+ *     responses:
+ *       200:
+ *         description: Cliente encontrado com sucesso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 client:
+ *                   $ref: '#/components/schemas/Client'
+ *       400:
+ *         description: Dados inválidos
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ValidationError'
+ *       401:
+ *         description: Não autorizado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       404:
+ *         description: Cliente não encontrado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ */
 @injectable()
 export class FetchClientByIdController extends BaseController {
   constructor(
