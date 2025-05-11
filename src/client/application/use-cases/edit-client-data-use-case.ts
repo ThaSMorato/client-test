@@ -1,7 +1,10 @@
 import type { ClientRepository } from '@/client/enterprise/repositories/client-repository.interface'
+import type { UserDAO } from '@/common/data/user-dao.interface'
 import { ResourceNotFoundError } from '@/common/errors/errors/resource-not-found.error'
 import type { Either } from '@/common/helpers/either'
 import { left, right } from '@/common/helpers/either'
+
+import { EmailAlreadyExistsError } from '../errors/email-already-exists.error'
 
 interface EditClientDataRequest {
   id: string
@@ -10,7 +13,10 @@ interface EditClientDataRequest {
 }
 
 export class EditClientDataUseCase {
-  constructor(private clientRepository: ClientRepository) {}
+  constructor(
+    private readonly clientRepository: ClientRepository,
+    private readonly userDAO: UserDAO,
+  ) {}
 
   async execute({
     id,
@@ -20,6 +26,14 @@ export class EditClientDataUseCase {
 
     if (!client) {
       return left(new ResourceNotFoundError())
+    }
+
+    if (props.email) {
+      const emailExists = await this.userDAO.doesUserEmailExist(props.email)
+
+      if (emailExists && props.email !== client.email) {
+        return left(new EmailAlreadyExistsError())
+      }
     }
 
     client.update(props)
