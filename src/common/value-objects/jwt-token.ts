@@ -22,7 +22,6 @@ export class JwtToken<Data> extends ValueObject<
 
   public static create<Dt extends object>({
     subject,
-    expires,
     data,
   }: JwtTokenCreationProps<Dt>) {
     const secret = process.env.JWT_SECRET
@@ -30,6 +29,10 @@ export class JwtToken<Data> extends ValueObject<
     if (!secret) {
       throw new Error('JWT_SECRET is not set')
     }
+
+    const expires = process.env.JWT_EXPIRES_IN
+      ? parseInt(process.env.JWT_EXPIRES_IN)
+      : 3600
 
     return new JwtToken<Dt>({
       subject,
