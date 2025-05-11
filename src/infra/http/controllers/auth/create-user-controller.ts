@@ -13,6 +13,64 @@ const createUserSchema = z.object({
   name: z.string().min(1),
 })
 
+/**
+ * @swagger
+ * /register:
+ *   post:
+ *     tags:
+ *       - Auth
+ *     summary: Cria um novo usuário
+ *     description: Endpoint para registro de novos usuários
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - name
+ *               - email
+ *               - password
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 example: João Silva
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 example: joao@example.com
+ *               password:
+ *                 type: string
+ *                 format: password
+ *                 example: senha123
+ *     responses:
+ *       201:
+ *         description: Usuário criado com sucesso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                   format: uuid
+ *                 name:
+ *                   type: string
+ *                 email:
+ *                   type: string
+ *       400:
+ *         description: Dados inválidos
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ValidationError'
+ *       409:
+ *         description: Email já cadastrado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ */
 @injectable()
 export class CreateUserController extends BaseController {
   constructor(

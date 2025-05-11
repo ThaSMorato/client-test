@@ -12,6 +12,26 @@ const deleteUserSchema = z.object({
   userId: z.string().uuid(),
 })
 
+/**
+ * @swagger
+ * /profile:
+ *   delete:
+ *     tags:
+ *       - Auth
+ *     summary: Deleta o usuário logado
+ *     description: Endpoint para deletar o próprio usuário
+ *     security:
+ *       - jwt: []
+ *     responses:
+ *       204:
+ *         description: Usuário deletado com sucesso
+ *       401:
+ *         description: Não autorizado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ */
 @injectable()
 export class DeleteUserController extends BaseController {
   constructor(

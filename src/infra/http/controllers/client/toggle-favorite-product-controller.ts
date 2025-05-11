@@ -14,6 +14,45 @@ const toggleFavoriteProductSchema = z.object({
   productId: z.string(),
 })
 
+/**
+ * @swagger
+ * /product/{productId}/favorite:
+ *   post:
+ *     tags:
+ *       - Client
+ *     summary: Adiciona/remove produto dos favoritos
+ *     description: Endpoint para adicionar ou remover um produto da lista de favoritos
+ *     security:
+ *       - jwt: []
+ *     parameters:
+ *       - in: path
+ *         name: productId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         example: "123"
+ *     responses:
+ *       204:
+ *         description: Produto adicionado/removido dos favoritos com sucesso
+ *       400:
+ *         description: Dados inválidos
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ValidationError'
+ *       401:
+ *         description: Não autorizado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       404:
+ *         description: Cliente ou produto não encontrado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ */
 @injectable()
 export class ToggleFavoriteProductController extends BaseController {
   constructor(

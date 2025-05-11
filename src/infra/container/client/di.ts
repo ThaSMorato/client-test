@@ -5,6 +5,7 @@ import { FindClientByIdUseCase } from '@/client/application/use-cases/find-clien
 import { ToggleFavoriteProductUseCase } from '@/client/application/use-cases/toggle-favorite-product-use-case'
 import type { ProductGateway } from '@/client/enterprise/gateways/product-gateway.interface'
 import type { ClientRepository } from '@/client/enterprise/repositories/client-repository.interface'
+import type { UserDAO } from '@/common/data/user-dao.interface'
 import { PrismaClientRepository } from '@/infra/db/prisma/repositories/prisma-client-repository'
 import { AxiosProductGateway } from '@/infra/gateways/axios/product/axios-product-gateway'
 import { EditClientDataController } from '@/infra/http/controllers/client/edit-client-data-controller'
@@ -13,6 +14,7 @@ import { FetchClientByIdController } from '@/infra/http/controllers/client/fetch
 import { FetchProfileController } from '@/infra/http/controllers/client/fetch-profile-controller'
 import { ToggleFavoriteProductController } from '@/infra/http/controllers/client/toggle-favorite-product-controller'
 
+import { AUTH_SYMBOLS } from '../auth/symbols'
 import { CLIENT_SYMBOLS } from './symbols'
 
 export const clientDiContainer = new ContainerModule(({ bind }) => {
@@ -31,7 +33,9 @@ export const clientDiContainer = new ContainerModule(({ bind }) => {
     const clientRepository = context.get<ClientRepository>(
       CLIENT_SYMBOLS.ClientRepository,
     )
-    return new EditClientDataUseCase(clientRepository)
+    const userDAO = context.get<UserDAO>(AUTH_SYMBOLS.UserDAO)
+
+    return new EditClientDataUseCase(clientRepository, userDAO)
   })
   bind(CLIENT_SYMBOLS.FindClientByIdUseCase).toDynamicValue((context) => {
     const clientRepository = context.get<ClientRepository>(

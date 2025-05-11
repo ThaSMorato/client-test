@@ -6,25 +6,29 @@
     "prisma": "prisma",
     "prisma:type": "prisma generate",
     "migrate:dev": "prisma migrate dev",
-    "studio": "prisma studio",
     "migrate:prod": "prisma migrate deploy",
-    "start": "node dist/src/index.js",
+    "studio": "prisma studio",
+    "start": "node build/src/infra/http/index.js",
     "dev": "tsx watch src/infra/http/index.ts",
-    "build": "tsc",
+    "build": "tsc -p tsconfig.build.json && tsc-alias",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:debug": "NODE_OPTIONS=--inspect-brk vitest",
-    "test:cov": "vitest run --coverage --config ./vitest.config.cov.ts",
-    "test:e2e": "vitest run --config ./vitest.config.e2e.ts",
-    "test:e2e:watch": "vitest --config ./vitest.config.e2e.ts"
+    "test:cov": "vitest run --coverage --config ./vitest.config.cov.mts",
+    "test:e2e": "vitest run --config ./vitest.config.e2e.mts",
+    "test:e2e:watch": "vitest --config ./vitest.config.e2e.mts"
   },
   "keywords": [],
   "author": "Thales Silva Morato (ThaSMorato)",
   "license": "ISC",
   "description": "Aiqfome Backend Test",
-  "type": "module",
   "engines": {
     "node": "v22.11.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "bcrypt"
+    ]
   },
   "devDependencies": {
     "@faker-js/faker": "^9.3.0",
@@ -36,6 +40,8 @@
     "@types/jsonwebtoken": "^9.0.9",
     "@types/node": "^22.10.2",
     "@types/supertest": "^6.0.3",
+    "@types/swagger-jsdoc": "^6.0.4",
+    "@types/swagger-ui-express": "^4.1.8",
     "@vitest/coverage-v8": "2.1.8",
     "eslint": "8.56",
     "eslint-plugin-vitest-globals": "^1.5.0",
@@ -44,6 +50,7 @@
     "reflect-metadata": "^0.2.2",
     "supertest": "^7.1.0",
     "swagger-express-ts": "^1.1.0",
+    "tsc-alias": "^1.8.16",
     "tsx": "^4.19.4",
     "typescript": "^5.8.3",
     "unplugin-swc": "^1.5.1",

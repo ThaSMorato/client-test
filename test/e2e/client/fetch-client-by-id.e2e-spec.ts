@@ -66,6 +66,20 @@ describe('Fetch Client By Id E2E', () => {
     })
   })
 
+  it('should return 400 if user id is not a valid uuid', async () => {
+    const token = await jwtMother.createAdminJwt()
+
+    const response = await request(app.httpServerInstance)
+      .get(`/client/invalid_uuid`)
+      .set('Cookie', `${JwtToken.jwtCookieName}=${token}`)
+
+    expect(response.status).toBe(400)
+    expect(response.body).toEqual({
+      errors: ['Invalid uuid'],
+      message: 'Invalid Data',
+    })
+  })
+
   it('should return 404 if user does not exists', async () => {
     const token = await jwtMother.createAdminJwt()
 

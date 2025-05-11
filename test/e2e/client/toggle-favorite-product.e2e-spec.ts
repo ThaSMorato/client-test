@@ -80,7 +80,7 @@ describe('Toggle Favorite Product E2E', () => {
     })
   })
 
-  it('should return 204 and fetch profile data', async () => {
+  it('should return 204 and toggle favorite product', async () => {
     const userId = faker.string.uuid()
     const token = await jwtMother.createUserJwt({
       id: userId,
