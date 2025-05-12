@@ -67,7 +67,7 @@ pnpm start
 | `PORT` | Porta onde o servidor vai rodar | `3333` |
 | `DATABASE_URL` | URL de conexão com o banco de dados | - |
 | `JWT_SECRET` | Chave secreta para geração do token JWT | - |
-| `JWT_EXPIRES_IN` | Tempo de expiração do token JWT | `1h` |
+| `JWT_EXPIRES_IN` | Tempo de expiração do token JWT | `3600` |
 
 ### Docker
 
