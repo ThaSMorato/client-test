@@ -155,6 +155,7 @@ src/
 - [ ] Implementar eventos de domínio
 - [ ] Implementar circuit breaker para serviços externos
 - [ ] Adicionar validação de domínio mais robusta
+- [ ] Implementar CQRS
 
 ### DevOps
 - [ ] Adicionar healthcheck
